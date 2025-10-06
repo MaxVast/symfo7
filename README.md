@@ -1,7 +1,7 @@
 # 🧪 Symfony 7.3 Playground (PHP 8.4)
 
-> Projet de test personnel pour explorer les nouveautés de Symfony 7.3 et PHP 8.4.  
-> Objectif : maintenir mes compétences à jour et partager mes expérimentations techniques.
+> Personal test project to explore the new features of Symfony 7.3 and PHP 8.4.
+> Objective: keep my skills up to date and share my technical experiments.
 
 ## 🐳 Stack
 - PHP 8.4 (Docker)
