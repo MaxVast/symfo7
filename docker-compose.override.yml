@@ -32,6 +32,8 @@ services:
   nginx:
     volumes:
       - ./public:/var/www/public
+      - ./docker/nginx/conf/nginx.conf.template:/etc/nginx/templates/nginx.conf
+      - ./docker/nginx/conf/project.conf.template:/etc/nginx/templates/project.conf.template
 
   database:
     image: mysql:5.7.34
