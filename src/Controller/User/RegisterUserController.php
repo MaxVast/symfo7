@@ -30,9 +30,6 @@ class RegisterUserController
         try {
             if($form->isSubmitted() && $form->isValid()){
                 $hashedPassword = $passwordHasher->hashPassword($user, $form->get('password')->get('first')->getData());
-
-
-
                 $user = $form->getData();
                 $user->setPassword($hashedPassword);
                 $userRepository->persistAndSave($user);

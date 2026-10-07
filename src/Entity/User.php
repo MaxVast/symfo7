@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\OneToMany;
 use Doctrine\ORM\Mapping\Table;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -37,12 +38,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private array $roles = ['ROLE_USER'];
 
+    #[OneToMany(mappedBy: 'organizer', targetEntity: Event::class)]
+    private iterable $organizedEvents;
+
+    #[OneToMany(mappedBy: 'user', targetEntity: Registration::class)]
+    private iterable $registrations;
+
+
     #[Column(type: 'datetime', nullable: false)]
     private \DateTimeInterface $createdAt;
 
     public function __construct()
     {
         $this->createdAt = new \DateTime();
+        $this->organizedEvents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->registrations = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -72,7 +82,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email)
     {
         $this->email = strtolower(trim($email));
     }
@@ -91,6 +101,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    public function setRoles(array $roles): void
+    {
+        $this->roles = array_values(array_unique($roles));
     }
 
     /**
